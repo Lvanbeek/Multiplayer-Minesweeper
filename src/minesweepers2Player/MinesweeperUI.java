@@ -47,22 +47,23 @@ public class MinesweeperUI extends javax.swing.JFrame {
                         int t_x = Integer.parseInt(coords[0]);
                         int t_y = Integer.parseInt(coords[1]);
                         board.click(t_x, t_y);
+                        board.clicks++;
 
                         if(board.p1.hasLost && board.p2.hasLost) {
                             JOptionPane.showMessageDialog(null, ("Sorry, you both lose!\r\n"  + "Your combined time was: \r\n" + ((board.now - board.start)/1000) + " seconds"));
-                            return;
+                            System.exit(0);
                         }
                         if(board.p1.hasWon && board.p2.hasWon) {
                             JOptionPane.showMessageDialog(null, "You both win!\r\n"  + "Your combined time was: \r\n" + ((board.now - board.start)/1000) + " seconds");
-                            return;
+                            System.exit(0);
                         }
                         if(board.p1.hasLost && board.p2.hasWon){
                             JOptionPane.showMessageDialog(null, "Player 2 wins!\r\n"  + "Your combined time was: \r\n" + ((board.now - board.start)/1000) + " seconds");
-                            return;
+                            System.exit(0);
                         }
                         if(board.p1.hasWon && board.p2.hasLost){
                             JOptionPane.showMessageDialog(null, "Player 1 wins!\r\n"  + "Your combined time was: \r\n" + ((board.now - board.start)/1000) + " seconds");
-                            return;
+                            System.exit(0);
                         }
                         clickBtn();
                         drawBtns();
@@ -87,7 +88,8 @@ public class MinesweeperUI extends javax.swing.JFrame {
                 int t_x = Integer.parseInt(coords[0]);
                 int t_y = Integer.parseInt(coords[1]);
                 board.rightClick(t_x, t_y);
-
+                board.clicks++;
+                
                 clickBtn();
                 drawBtns();
             }
@@ -97,17 +99,11 @@ public class MinesweeperUI extends javax.swing.JFrame {
     public void drawBtns() {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if ((buttons[x][y].getBackground() == Color.RED || buttons[x][y].getBackground() == Color.BLUE) && board.board[x][y] == -3){
-                    y++;
-                }
                 if (board.board[x][y] == -1 || board.board[x][y] == -2) {
                     buttons[x][y].setBackground(Color.GRAY);
                     buttons[x][y].setText(" ");
-                } else if ((((board.clicks ) % 2) != 0) && board.board[x][y] == -3 || board.board[x][y] == -4) {
+                } else if (board.board[x][y] == -3 || board.board[x][y] == -4) {
                     buttons[x][y].setBackground(Color.RED);
-                    buttons[x][y].setText("F");
-                } else if ((((board.clicks ) % 2) == 0) && board.board[x][y] == -3 || board.board[x][y] == -4){
-                    buttons[x][y].setBackground(Color.BLUE);
                     buttons[x][y].setText("F");
                 } else {
                     buttons[x][y].setBackground(Color.WHITE);

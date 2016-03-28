@@ -11,7 +11,7 @@ public class Board {
     public long start;
     public long now;
     public long increase = 0;
-    int clicks = 1;
+    int clicks = 0;
     Player p1 = new Player();
     Player p2 = new Player();
     
@@ -77,7 +77,7 @@ public class Board {
                 System.out.print(board[row][col] + " ");}
             System.out.println();
         }
-        clicks++;
+        
     }
     public void placeMines(int n_x, int n_y){
         
@@ -99,6 +99,7 @@ public class Board {
     }
     public void click(int x, int y)
     {
+        clicks++;
         if((clicks % 2) == 0 && p2.hasLost){
             clicks++;
         }
@@ -130,14 +131,12 @@ public class Board {
             firstClick = false;
             placeMines(x, y);
             start = System.currentTimeMillis();
-            clicks++;
             
         }
         if(isMine(x,y))
         {
             p1.hasLost = true;
             now = System.currentTimeMillis();
-            clicks++;
             return;
         }
         
@@ -160,7 +159,6 @@ public class Board {
             firstClick = false;
             placeMines(x, y);
             start = System.currentTimeMillis();
-            clicks++;
             
         }
         if(isMine(x,y))
@@ -182,7 +180,6 @@ public class Board {
         } 
         now = System.currentTimeMillis();
         }
-    clicks++;
     }
     
     public void rightClick(int x, int y)
@@ -199,22 +196,17 @@ public class Board {
         switch (board[x][y]) {
             case -3:
                 board[x][y] = -2;
-                clicks++;
                 break;
             case -4:
                 board[x][y] = -1;
-                clicks++;
                 break;
             case -1:
                 board[x][y] = -4;
-                clicks++;
                 break;
             case -2:
                 board[x][y] = -3;
-                clicks++;
                 break;
             default:
-                clicks++;
                 break;
         }
     }
